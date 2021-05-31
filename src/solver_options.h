@@ -72,7 +72,8 @@ public:
     double dt_max = 1.0 / dt_eps_m;
 
     // Verbosity level of the solver:
-    // 0 - silent, 1 - basic information, 2 - time stepping info, 3 - all info
+    // 0 - silent, 1 - basic information, 2 - time stepping info,
+    // 3 - time integrator info, 4 - all info
     int verbosity = 2;
 
     // Simple Adaptive Time Stepping options
@@ -135,6 +136,8 @@ public:
     MKL_INT parallel_solve_control = 0;
 
     SolverOptions() = default;
+
+    virtual ~SolverOptions() = default;
 
     // Initialises Intel MKL PARDISO parameters (iparam) array
     void set_iparm_for_pardiso(MKL_INT *iparm);

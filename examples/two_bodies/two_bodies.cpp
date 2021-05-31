@@ -192,7 +192,9 @@ int main()
     plt::save(filename);
 #endif
 
-    if(status)
+    // x[2] > x[3] would mean that the collision condition defined in Observer
+    // did not trigger.
+    if(status || (x[2] > x[3]))
         std::cout << "...Test FAILED\n\n";
     else
         std::cout << "...done\n\n";

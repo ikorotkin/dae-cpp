@@ -219,12 +219,12 @@ void Jacobian::print(const state_type &x, const double t)
 /*
  * Helper function to compare two Jacobians and write the difference
  */
-void Jacobian::compare(Jacobian jac, const state_type &x, const double t,
-                       const double tol)
+int Jacobian::compare(Jacobian jac, const state_type &x, const double t,
+                      const double tol)
 {
-    std::cout << "Jacobian::compare() -- INFO: Trying to compare two "
-                 "Jacobians at time t = "
-              << t << " and the tolerance tol = " << tol << "...\n";
+    // std::cout << "Jacobian::compare() -- INFO: Trying to compare two "
+    //              "Jacobians at time t = "
+    //           << t << " and the tolerance tol = " << tol << "...\n";
 
     sparse_matrix_holder M, J;
 
@@ -241,7 +241,7 @@ void Jacobian::compare(Jacobian jac, const state_type &x, const double t,
     {
         std::cout << "Jacobian::compare() -- ERROR: the sizes of the "
                      "matrices do not match ('ia' indexes are different).\n";
-        return;
+        return -1;
     }
 
     std::ofstream outFile;
@@ -258,7 +258,7 @@ void Jacobian::compare(Jacobian jac, const state_type &x, const double t,
             << delimiter << "Jac_reference" << delimiter << "Rel_difference"
             << '\n';
 
-    std::size_t ndiff = 0;  // counts differences
+    int ndiff = 0;  // counts differences
 
     for(MKL_INT j = 0; j < size; j++)
     {
@@ -304,10 +304,12 @@ void Jacobian::compare(Jacobian jac, const state_type &x, const double t,
     }
 
     outFile << "Total number of differences found: " << ndiff << '\n';
-    std::cout << "Jacobian::compare() -- INFO: Found " << ndiff
-              << " difference(s).\n";
+    // std::cout << "Jacobian::compare() -- INFO: Found " << ndiff
+    //           << " difference(s).\n";
 
     outFile.close();
+
+    return ndiff;
 }
 
 }  // namespace daecpp_namespace_name

@@ -13,7 +13,7 @@
 #include "jacobian.h"
 
 // clang-format off
-#define JACOBIAN_SCHEME 1  // 0 - Central differences: (f(x+h) - f(x-h)) / (2*h)
+#define JACOBIAN_SCHEME 0  // 0 - Central differences: (f(x+h) - f(x-h)) / (2*h)
                            // 1 - Faster but less accurate scheme: (f(x+h) - f(x)) / h
 // clang-format on
 

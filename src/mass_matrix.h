@@ -23,6 +23,8 @@ class MassMatrix
     void m_matrix_converter(daecpp::sparse_matrix_holder &M);
 
 public:
+    virtual ~MassMatrix() {}
+
     /*
      * The matrix should be defined in sparse format,
      * see three array sparse format decription on

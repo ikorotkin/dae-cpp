@@ -46,6 +46,8 @@ public:
         // TODO: Check user's tol parameter. Too small tol may lead to crash.
     }
 
+    virtual ~Jacobian() {}
+
     /*
      * Can be overriden to provide analytical Jacobian
      */
@@ -66,9 +68,10 @@ public:
      * Helper function to compare two Jacobians and write the differences.
      * Comparison will be made with the external Jacobian jac (usually,
      * numerical Jacobian) using vector x at time t with the given tolerance.
+     * Returns the number of differences found.
      */
-    void compare(Jacobian jac, const state_type &x, const double t,
-                 const double tol);
+    int compare(Jacobian jac, const state_type &x, const double t,
+                const double tol);
 };
 
 }  // namespace daecpp_namespace_name

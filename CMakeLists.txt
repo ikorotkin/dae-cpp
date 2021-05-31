@@ -49,13 +49,18 @@ if(WIN32)
     set(DAE_INTEL_LIB "${DAE_MKL_DIR}/../compiler/lib/ia32_win")
   endif()
 else(WIN32)
+  # MKL library
   if(EXISTS ${DAE_MKL_DIR}/lib/intel64)
     set(DAE_MKL_LIB "${DAE_MKL_DIR}/lib/intel64")
-    set(DAE_INTEL_LIB "${DAE_MKL_DIR}/../lib/intel64")
   else(EXISTS ${DAE_MKL_DIR}/lib/intel64)
     set(DAE_MKL_LIB "${DAE_MKL_DIR}/lib")
-    set(DAE_INTEL_LIB "${DAE_MKL_DIR}/../lib")
   endif(EXISTS ${DAE_MKL_DIR}/lib/intel64)
+  # Intel OMP library
+  find_path(DAE_INTEL_LIB NAMES libiomp5.so libiomp5.a PATHS
+    ${DAE_MKL_DIR}/../lib/intel64
+    ${DAE_MKL_DIR}/../compiler/lib/intel64
+    ${DAE_MKL_DIR}/../lib
+    DOC "Path to libiomp5 (Intel OMP library)")
 endif(WIN32)
 
 

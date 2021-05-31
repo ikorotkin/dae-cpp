@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/ikorotkin/dae-cpp.svg?branch=master)](https://travis-ci.com/ikorotkin/dae-cpp)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4aa33eb3a2834808a6cd1b81e0d8cc23)](https://www.codacy.com/app/ikorotkin/dae-cpp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ikorotkin/dae-cpp&amp;utm_campaign=Badge_Grade)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3241870.svg)](https://doi.org/10.5281/zenodo.3241870)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3256507.svg)](https://doi.org/10.5281/zenodo.3256507)
 
 A simple but powerful C++ solver for Differential Algebraic Equation (DAE) systems.
 
@@ -44,6 +44,7 @@ Install the GPG key for the repository:
 ```bash
 wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB
 sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB
+rm GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB
 ```
 
 Add the APT Repository:
@@ -56,10 +57,17 @@ Update the list of packages and install the library:
 
 ```bash
 sudo apt-get update
-sudo apt-get install intel-mkl-2019.3-062
+sudo apt-get install intel-mkl-2019.5-075
 ```
 
-This will install Intel MKL 2019.3. The list of all available versions can be found [here](https://software.intel.com/en-us/articles/installing-intel-free-libs-and-python-apt-repo).
+This will install Intel MKL 2019.5. The list of all available versions and more information can be found [here](https://software.intel.com/en-us/articles/installing-intel-free-libs-and-python-apt-repo).
+
+Note the latest versions of Intel MKL (2020) may produce a lot of run-time warnings. This is a known issue, the only workaround is to suppress them exporting the following variable:
+
+```bash
+# Suppress MKL run-time warnings (to fix a known issue of MKL 2020)
+export KMP_WARNINGS=0
+```
 
 ### Linux
 
@@ -72,7 +80,7 @@ sudo apt-get install g++ cmake cmake-curses-gui git
 In order to enable plotting (optional), `python3`, `matplotlib` and `numpy` should be installed:
 
 ```bash
-sudo apt-get install python3 python3-numpy python3-matplotlib
+sudo apt-get install python3 python3-dev python3-numpy python3-matplotlib
 ```
 
 Then download dae-cpp library:

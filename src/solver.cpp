@@ -229,7 +229,7 @@ int Solver::operator()(state_type &x, double &t1)
                         m_mkl_a, m_ia, m_ja, &m_idum, &m_nrhs, m_iparm,
                         &m_msglvl, &m_ddum, &m_ddum, &m_error);
 
-                if(m_opt.verbosity > 2)
+                if(m_opt.verbosity > 3)
                 {
                     if(m_iparm[14] > peak_mem1 || m_iparm[15] > peak_mem2 ||
                        m_iparm[16] > peak_mem3)
@@ -366,7 +366,7 @@ int Solver::operator()(state_type &x, double &t1)
             if(m_opt.verbosity > 1)
             {
                 std::cout << "#";
-                // std::cout.flush();  // This degrades performance in some cases
+                // std::cout.flush();  // This degrades performance
             }
 
             if(is_converged)
@@ -408,6 +408,15 @@ int Solver::operator()(state_type &x, double &t1)
         else if(status > 0)
             continue;  // Re-run the current time step
 
+        // Call Observer to provide a user with intermediate results
+        observer(x, m_iterator_state.t);
+
+        // Check the time step does not exceed dt_max
+        if(m_iterator_state.dt_eval > m_opt.dt_max)
+        {
+            m_iterator_state.dt_eval = m_opt.dt_max;
+        }
+
         // Looks like the solver has reached the target time t1
         if((m_iterator_state.t + m_iterator_state.dt_eval) >=
            (t1 - m_opt.dt_min))
@@ -425,9 +434,6 @@ int Solver::operator()(state_type &x, double &t1)
                 m_iterator_state.dt_eval         = dt_max;
             }
         }
-
-        // Call Observer to provide a user with intermediate results
-        observer(x, m_iterator_state.t);
 
         // Rewrite solution history
         for(int d = m_opt.bdf_order - 1; d > 0; d--)

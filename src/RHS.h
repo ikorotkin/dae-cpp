@@ -15,6 +15,8 @@ class RHS
     std::size_t m_dump_file_counter = 0;
 
 public:
+    virtual ~RHS() {}
+
     /*
      * Takes vector x and time t and returns vector f.
      * This function is pure virtual and must be overriden.
